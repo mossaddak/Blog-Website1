@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} my blogs {% endblock %}
+{% block content %}
+<section class="my_blogs">
+    <div class="container-fluid">
+        <!-- messages -->
+        {% if messages %}        
+        <div class="form-group py-1">
+            {% include 'message.html' %}
+        </div>
+        {% endif %}
+    <!-- message end -->
+        <div class="row py-5">
+
+
+
+            {% for blog in blogs %}
+            <div class="col-md-3 my-2">
+
+                <!---- main card start ---->
+                <div class="card">
+
+                    <a href="{% url 'blog_details' blog.slug %}">
+                        <img class="card-img-top img-fluid" style="width:100%; height:200px;" src="{{ blog.banner.url }}" alt="Card image cap">
+                    </a>
+                    
+                    <div class="card-body">
+                        <p class="card-text d-flex flex-row">
+                            {{ blog.title|truncatechars:15}}
+
+                            <!-- update icon -->
+                            <a href="{% url 'update_blog' blog.slug %}" class="px-2 ml-auto">
+                                <i class="fa fa-edit"></i>
+                            </a>
+
+                            <!-- deete icon -->
+                            <a href="?delete={{ blog.pk }}" class="px-2">
+                                <i class="fa fa-trash text-danger"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <!--- main card ends --->
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row py-2 justify-content-center">
+            <div class="col-md-8">
+                {% include 'pagination.html' %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

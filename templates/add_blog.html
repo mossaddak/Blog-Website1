@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %} add blog {% endblock %}
+{% load static %}
+
+{% block content %}
+
+<section class="add_blog">
+    <div class="container">
+        <div class="row py-5 justify-content-center">
+            <div class="col-md-8">
+                <!-- blog form -->
+                <form action="#" method="POST" enctype="multipart/form-data">
+                    {{ form.media }}
+                    {% csrf_token %}
+
+
+                    <!-- title -->
+                    <div class="form-group py-1">
+                        <label for="title">Blog Title</label>
+                        <input type="text" name="title" class="form-control">
+                        <p style="color: red;" class="py-1">{{ form.title.errors }}</p>
+                    </div>
+
+
+                    <!-- category -->
+                    <div class="form-group py-1">
+                        <label for="title">Blog Category:</label>
+
+                        <select name="category" class=" form-control" id="category_id">
+                            {% for category in categories %}
+                            <option value="{{ category.id }} ">{{ category.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <p style="color: red;" class="py-1">{{ form.category.errors }}</p>
+
+                    </div>
+
+
+                    <!-- description -->
+                    <div class="form-group py-1">
+                        <label for="descriptin">Add Description:</label>
+                        {{ form.description|safe }}
+                        <p style="color: red;" class="py-1">{{ form.description.errors }}</p>
+                    </div>
+
+                    <!-- banner -->
+                    <div class="form-group py-1">
+                        <label for="banner">Add Image:</label>
+                        <input type="file" name="banner" class="border form-control p-1">
+                        <p style="color: red;" class="py-1">{{ form.banner.errors }}</p>
+                    </div>
+
+
+                    <!-- tags -->
+                    <div class="form-group py-1">
+                        <label for="tags">Add Tags:</label>
+                        <textarea name="tags" cols="50" rows="3" class="border btn text-left form-control"
+                            placeholder="programming,graphics,animation..."></textarea>
+                        <p style="color: red;" class="py-1">{{ form.tags.errors }}</p>
+                    </div>
+
+                    <!-- submit button -->
+                    <div class="form-group py-1">
+                        <button type="submit" class="btn btn-block " style="background-color:#f48840;color: white;">Add
+                            Blog</button>
+                    </div>
+
+                </form>
+                <!-- end -->
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

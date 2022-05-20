@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} my profile {% endblock %}
+{% block content %}
+
+<section class="profile">
+    <div class="container-fluid">
+        <div class="row py-5">
+            <!--- first column starts --->
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img src="{{ account.get_profile_picture }}" class="rounded rounded-circle profile-picture">
+                    <ul class="text-center py-3">
+                        <li class="py-2">   
+                            <strong style="font-size: 25px;">{{account.username}}</strong>   
+                        </li>
+                        <li class="py-2">
+                            <span>Post: <strong>{{ account.user_blogs.count }}</strong></span>
+                        </li>
+                        
+                        <li class="py-2">
+                            <span>Followers: <strong>{{ account.users_followers.count }}</strong></span>
+                        </li>
+
+                        
+                        <li class="py-2">
+                            <span>Following: <strong>{{ account.user_follows.count }}</strong></span>
+                        </li>
+
+                        <!-- follow/unfollow button -->
+                        {% if user != account.user %}
+                        <li class="py-2">
+                            {% if following %}
+                            <a href="{% url 'follow_or_unfollow_user' account.id %}" class="btn col-3" style="background-color: #F48840;color: white;">Unfollow</a>
+
+                            <!--- muted btn --->
+                            {% if muted %}
+                            <a href="{% url 'mute_or_unmute' account.id %}" class="btn col-3" style="background-color: #F48840;color: white;">Unmute</a>
+                            {% else %}
+                            <a href="{% url 'mute_or_unmute' account.id %}" class="btn col-3" style="background-color: #F48840;color: white;">Mute</a>
+                            {% endif %}
+                            <!-- muted btn end -->
+
+
+                            {% else %}
+                            <a href="{% url 'follow_or_unfollow_user' account.id %}" class="btn col-3" style="background-color: #F48840;color: white;">Follow</a>
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div>
+
+                </div>
+            </div>
+            <!-- first column ends -->
+            
+
+            <!----- user blogs start ----->
+            <ul class="list-group list-group-flush">
+                <p class="badge mx-1 mx-md-0" style="background-color: #F48840; color: white; font-size: medium;">{{ account.username }}'s all blogs</p>
+                {% for blog in account.user_blogs.all %}
+                <li class="list-group-item py-3">
+                    <a class="btn text-left" href="{% url 'blog_details' blog.slug %}">
+                        <p>{{ blog.title }}</p>
+                        <p>{{ blog.created_date }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+            <!--- user blogs end --->
+        </div>
+        
+    </div>
+</section>
+
+{% endblock %}

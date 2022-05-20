@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} registration {% endblock %}
+{% block content %}
+
+<section class="contact-us">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="down-contact">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="sidebar-item contact-form">
+                                <div class="sidebar-heading">
+                                    <h2>Create your account</h2>
+                                </div>
+                                <div class="content">
+
+                                    <!------ main form starts ------>
+                                    <form id="contact" action="" method="POST" novalidate>
+                                        {% csrf_token %}
+                                        <div class="row">
+
+                                            <!--- user name --->
+                                            <div class="col-12">
+                                                <fieldset>
+                                                    <input {% if form.is_bound %} value="{{ form.username.value }}" {% endif %} name="username" type="text" id="username_id"
+                                                        placeholder="user name">
+                                                        <p class="py-1 text-danger errors">{{ form.username.errors }}</p>
+                                                </fieldset>
+                                            </div>
+
+                                            <!--- email --->
+                                            <div class="col-12">
+                                                <fieldset>
+                                                    <input {% if form.is_bound %} value="{{ form.email.value }}" {% endif %} name="email" type="email" id="email_id"
+                                                        placeholder="email">
+                                                        <p class="py-1 text-danger errors">
+                                                            {{ form.email.errors }}
+                                                        </p>
+                                                </fieldset>
+                                            </div>
+
+                 
+                                            <!--- password --->
+                                            <div class="col-12">
+                                                <fieldset>
+                                                    <input {% if form.is_bound %} value="{{ form.password.value }}" {% endif %} name="password" type="password" id="password_id"
+                                                        placeholder="password">
+                                                        <p class="py-1 text-danger errors">
+                                                            {{ form.password.errors }}
+                                                        </p>
+                                                </fieldset>
+                                            </div>
+
+                                            <!--- confirm password --->
+                                            <div class="col-12">
+                                                <fieldset>
+                                                    <input name="confirm_password" type="password" id="confirm_password_id"
+                                                        placeholder="confirm password">
+
+                                                        <p class="py-1 text-danger errors">
+                                                            {{ form.confirm_password.errors }}
+                                                        </p>
+                                                </fieldset>
+                                            </div>
+
+
+                                            <!--- submit button --->
+                                            <div class="col-lg-12">
+                                                <fieldset>
+                                                    <button id="form-submit" style="color: white;"
+                                                        class="main-button">Create account</button>
+                                                    <button><a href="{% url 'login' %}" id="form-submit"
+                                                            style="color: white;" class="main-button">Have Account ?</a></button>
+                                                </fieldset>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                    <!------ main form ends ------->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

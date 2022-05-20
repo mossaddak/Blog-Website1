@@ -1,0 +1,97 @@
+{% load static %}
+<!-- Header -->
+<header class="pb-5">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img style="width: 12vh;" class="" src="{% static 'images/1_Logo/1_Ms-Academy.png' %}">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+
+          <!-- home -->
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          <!-- blog -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blogs' %}">Blogs</a>
+          </li>
+
+          <!-- category -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Category
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% for category in categories %}
+              <a class="dropdown-item" href="{% url 'category_blogs' category.slug%}">{{ category.title }}</a>
+              {% endfor %}
+            </div>
+          </li>
+
+          </li>
+
+
+          <!-- notifications part -->
+          <li class="nav-item">
+      
+            <a class="nav-link" href="{% url 'user_notifications' %}">
+              {% if unseen > 0 %}
+              Notification <span class="badge" style="background-color: #f48840; color: white;" >{{ unseen }}</span>
+              {% else %}
+              Notification
+              {% endif %}
+            </a>
+
+          </li>
+
+
+          <!--- login --->
+          {% if request.user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              {{ user.username }}
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'profile' %}">My Profile</a>
+
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            </div>
+
+          </li>
+
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          {% endif %}
+          <!---- login form end ----->
+
+
+        </ul>
+
+        <!---- search form ---->
+        <form action="{% url 'search_blogs' %}" class="form-inline d-flex flex-nowrap input-group col-md-4 mb-2 ml-auto"
+          method="GET">
+          {% csrf_token %}
+          <input class="form-control" type="text" name="search" placeholder="search" required>
+          <button class="btn search_btn form-control col-3 col-md-4"
+            style="background-color:#f48840;color: white;">search</button>
+        </form>
+        <!-- search form end -->
+      </div>
+    </div>
+  </nav>
+</header>

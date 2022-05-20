@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} my profile {% endblock %}
+{% block content %}
+
+<section class="profile">
+    <div class="container-fluid">
+        <div class="row py-5">
+            <!--- first column starts --->
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img src="{{ request.user.get_profile_picture }}" class="rounded rounded-circle profile-picture">
+                    <ul class="text-center py-3">
+                        <li class="py-2">
+                            <strong style="font-size: 25px;">{{user.first_name}} {{user.last_name}}</strong>
+                        </li>
+                        <li class="py-2">
+                            <span>Post: <strong>{{ account.user_blogs.count }}</strong></span>
+                        </li>
+                        <li class="py-2">
+                            <span>Followers: <strong>{{ account.users_followers.count }}</strong></span>
+                        </li>
+                        <li class="py-2">
+                            <span>Following: <strong>{{ account.user_follows.count }}</strong></span>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+
+                <!-------- image modal starts -------->
+                <div class="text-center pb-2">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn" style="background-color: #F48840; color: white;"
+                        data-toggle="modal" data-target="#exampleModal">
+                        Update Profile Picture
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Update Profile Picture</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!--- modal form starts --->
+                                    <form action="{% url 'change_profile_picture' %}" method="POST"
+                                        enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="p-2 border ">
+                                            <input name="profile_image" type="file" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn"
+                                                style="background-color: #F48840; color: white;">Save changes</button>
+                                        </div>
+                                    </form>
+                                    <!--- modal form ends --->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------- image modal ends ------->
+
+
+                <ul class="list-group text-center">
+                    <li class="list-group-item my-1">
+                        <a href="{% url 'my_blogs' %}" class="text-decoration-none">
+                            My Blogs
+                        </a>
+                    </li>
+                    <li class="list-group-item my-1">
+                        <a href="{% url 'add_blog' %}" class="text-decoration-none">
+                            Add Blogs
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- first column ends -->
+
+            <!--- second column starts --->
+            <div class="col-md-8">
+
+                <!---- informatation update form ---->
+                <form action="{% url 'profile' %}" method="POST" class="px-md-5">
+                    {% csrf_token %}
+
+                    <!---- messages part ----->
+                    {% if messages %}
+                    <div class="class-group my-2">
+                        {% include 'message.html' %}
+                    </div>
+                    {% endif %}
+                    <!-- message end -->
+
+                    {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>{{ error }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+
+                    <!-- first name -->
+                    <div class="class-group my-2">
+                        <label for="firstname">First Name</label>
+                        <input class="form-control" name="first_name" value="{{ account.first_name }}" type="text">
+                        <p class="py-1" style="color: red;">{{ form.first_name.errors }}</p>
+                    </div>
+
+                    <!-- last name -->
+                    <div class="class-group my-2">
+                        <label for="lastname">Last Name</label>
+                        <input class="form-control" name="last_name" value="{{ account.last_name }}" type="text">
+                        <p class="py-1" style="color: red;">{{ form.last_name.errors }}</p>
+                    </div>
+
+                    <!-- user name -->
+                    <div class="class-group my-2">
+                        <label for="username">Username</label>
+                        <input class="form-control" name="username" value="{{ account.username }}" type="text">
+                        <p class="py-1" style="color: red;">{{ form.username.errors }}</p>
+                    </div>
+
+                    <!-- email -->
+                    <div class="class-group my-2">
+                        <label for="email">Email</label>
+                        <input class="form-control" name="email" value="{{ account.email }}" type="email">
+                        <p class="py-1" style="color: red;">{{ form.email.errors }}</p>
+                    </div>
+
+                    <!-- new password -->
+                    <div class="class-group my-2">
+                        <label for="new_password">New Password</label>
+                        <input class="form-control" name="new_password" value="" type="password">
+                    </div>
+
+                    <!-- confirm password -->
+                    <div class="class-group my-2">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input class="form-control" name="confirm_password" value="" type="password">
+                    </div>
+
+                    <!-- update button -->
+                    <div class="class-group my-2">
+                        <button class="btn col-12" style="background-color:#F48840; color: white;">Update</button>
+                    </div>
+                </form>
+            </div>
+            <!-- second column ends -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}

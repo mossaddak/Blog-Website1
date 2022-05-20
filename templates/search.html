@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% endblock %}
+{% block content %}
+
+<section class="blog-posts grid-system">
+    <div class="container">
+        <!--- searching result --->
+        <div class="row">
+            <div class="col-md-8">
+                <p class="">{{ blogs.count }} results found for<span class="badge ml-2" style="background-color: #f48840; color: white; font-size: medium;">{{ search_key }}</span> <b></b></p>
+                <hr>
+            </div>
+        </div>
+        <!-- searching result end -->
+
+        <!---- cards ---->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="all-blog-posts">
+                    <div class="row">
+
+                        {% for blog in blogs %}
+                        {% include 'blog_card.html' %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+            <!--- cards end --->
+            {% include 'sidebar.html' with blogs=recent_blogs %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} blogs {% endblock %}
+{% load static %}
+
+{% block content %}
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-lg-8">
+            
+            <!-- blogs count -->
+            <span class="badge mb-1 p-2" style="color: white; background-color: #F48840;">Total {{ paginator.object_list.count }} blogs</span>
+            <hr>
+            
+
+            <div class="all-blog-posts">
+              <div class="row">
+
+                {% for blog in blogs %}
+                  {% include 'blog_card.html' %}
+                {% endfor %}
+
+                <!-- pagination starts -->
+                <div class="col-lg-12">
+                  {% include 'pagination.html' %}
+                </div>
+                <!-- pagination end -->
+
+              </div>
+            </div>
+          </div>
+          {% include 'sidebar.html' %}
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

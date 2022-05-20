@@ -1,0 +1,35 @@
+{% load static %}
+<!-- Banner Starts Here -->
+<div class="main-banner header-text">
+  <div class="container-fluid">
+    <div class="owl-banner owl-carousel">
+      {% for blog in blogs|slice:"4" %}
+      <div class="item">
+        <img src="{{ blog.banner.url}}" class="img-fluid" style="width:100%; height:320px;" alt="">
+        <div class="item-content">
+          <div class="main-content">
+            <div class="meta-category">
+              <span>{{ blog.category }}</span>
+            </div>
+            <a href="{% url 'blog_details' blog.slug %}">
+              <h4>{{ blog.title }}</h4>
+            </a>
+            <ul class="post-info">
+              <li><a href="{% url 'view_user_information' blog.user.username %}">{{ blog.user.username }}</a></li>
+              <li><a href="javascript:void(0)">{{ blog.created_date }}</a></li>
+              <li><a href="javascript:void(0)">{{ blog.likes.count }} &#160; <i class="fa fa-heart empty-heart"></i></a>
+              </li>
+              <li><a href="{% url 'blog_details' blog.slug %}">{{ blog.blog_comment.all.count }} comments</a></li>
+
+
+              <!-- like modal -->
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- Banner Ends Here -->

@@ -1,0 +1,23 @@
+.empty-heart{
+    color: #cdcdcd !important;
+}
+.fa-heart{
+    color:red !important;
+}
+.empty-heart{
+    color:#cdcdcd !important;
+}
+
+.errorlist{
+    color: red !important;
+    padding-bottom: 10px !important;
+}
+input, textarea{
+    text-transform: none !important;
+}
+
+.profile-picture{
+    max-width: 45%;
+    width: 90%;
+    height: 180px;
+}
